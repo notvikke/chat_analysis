@@ -15,6 +15,14 @@ import random # For Fun Fact button
 from io import StringIO # For caching uploaded file content
 
 DetectorFactory.seed = 0
+try:
+    nltk.data.find('tokenizers/punkt')
+except nltk.downloader.DownloadError:
+    st.info("Downloading NLTK 'punkt' resource...") # Optional: inform the user
+    nltk.download('punkt', quiet=True) # quiet=True suppresses verbose output
+except LookupError: # More general NLTK data lookup error
+    st.info("Downloading NLTK 'punkt' resource (LookupError)...")
+    nltk.download('punkt', quiet=True)
 
 def download_nltk_resources():
     resources = {"stopwords": "corpora/stopwords", "vader_lexicon": "sentiment/vader_lexicon.zip", "punkt": "tokenizers/punkt"}
